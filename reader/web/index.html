@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Browser</title>
+<script src="boot.js"></script><link rel="stylesheet" href="wizard-tokens.css"><link rel="stylesheet" href="wizard-ui.css"><link rel="stylesheet" href="styles.css">
+<script defer src="/wizard-os-home/core/app-client.js"></script><script defer src="app.js"></script></head>
+<body><main class="wz-app">
+<nav class="reader-mode" aria-label="Browser view"><span aria-current="page">Reader</span><button id="home" class="wz-btn" type="button">Reading list</button></nav>
+<form id="address" class="wz-field-row"><input id="url" class="wz-input" name="url" type="url" aria-label="Web address" placeholder="Paste a web address" required><button class="wz-btn" type="submit">Read</button></form>
+<div id="error" role="alert" hidden><span></span> <button id="retry" class="wz-btn" type="button">Retry</button></div>
+<p id="status" class="wz-muted" role="status" aria-live="polite">Open a web link or paste an address to read it here.</p>
+<section id="library" aria-labelledby="list-title"><h1 id="list-title">Reading list</h1><p id="empty" class="wz-muted">Save an article in Reader to come back to it later.</p><div id="unread"></div><details id="read-section" hidden><summary>Read <span id="read-count"></span></summary><div id="read-items"></div></details></section>
+<section id="page" hidden><div class="article-column"><div class="source"><img id="logo" alt="" width="28" height="28"><div><strong id="site"></strong><p id="source"></p></div></div>
+<div class="reader-actions"><button id="save" class="wz-btn" type="button" aria-pressed="false" disabled><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span>Save</span></button><a id="original" class="wz-btn" data-wizard-browse target="_blank" rel="noopener noreferrer">Open in your browser</a></div>
+<h1 id="title"></h1><p id="byline" class="wz-muted"></p><article id="article"></article></div></section>
+</main></body></html>

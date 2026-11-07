@@ -1,0 +1,127 @@
+name: Reader native images
+on:
+  pull_request:
+    paths: ['reader/**', 'tests/**', '.github/workflows/reader-images.yml']
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact trusted source revision to publish
+        required: true
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts && npm test
+        working-directory: reader
+      - run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - run: python3 mcp/inline.py --check
+  build:
+    if: github.event_name == 'workflow_dispatch' && github.repository == 'humanitylabs-org/browser' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat/reader' || github.ref == 'refs/heads/feat/reading-list' || github.ref == 'refs/heads/fix/defuddle-reader' || github.ref == 'refs/heads/fix/reader-fast-handoff') && inputs.expected_sha == github.sha
+    needs: checks
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            arch: amd64
+          - runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Refuse replacement of immutable source tag
+        env:
+          IMAGE: ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }}-${{ matrix.arch }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import base64,json,os,urllib.request,urllib.error
+          repo='humanitylabs-org/browser-reader'
+          req=urllib.request.Request('https://ghcr.io/token?service=ghcr.io&scope=repository:'+repo+':pull', headers={'Authorization':'Basic '+base64.b64encode((os.environ['GITHUB_ACTOR']+':'+os.environ['GH_TOKEN']).encode()).decode()})
+          token=json.load(urllib.request.urlopen(req))['token']
+          req=urllib.request.Request('https://ghcr.io/v2/'+repo+'/manifests/'+os.environ['IMAGE'].split(':')[-1], method='HEAD',headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json'})
+          try:
+              urllib.request.urlopen(req)
+          except urllib.error.HTTPError as e:
+              if e.code != 404: raise
+          else: raise SystemExit('Immutable tag already exists; never replace it')
+          PY
+      - uses: docker/build-push-action@v6
+        with:
+          context: reader
+          platforms: linux/${{ matrix.arch }}
+          push: true
+          tags: ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }}-${{ matrix.arch }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/humanitylabs-org/browser
+            org.opencontainers.image.revision=${{ github.sha }}
+  manifest:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          docker buildx imagetools create --tag ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }} ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }}-amd64 ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }}-arm64
+          docker buildx imagetools inspect ghcr.io/humanitylabs-org/browser-reader:sha-${{ github.sha }} | tee reader-image.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reader-image
+          path: reader-image.txt
+  anonymous-pull:
+    needs: manifest
+    permissions: {}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull both native images without publication credentials
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          export DOCKER_CONFIG=$(mktemp -d)
+          export HOME=$(mktemp -d)
+          unset GITHUB_TOKEN GH_TOKEN
+          image=ghcr.io/humanitylabs-org/browser-reader:sha-$SOURCE_SHA
+          docker buildx imagetools inspect --raw "$image" > index.json
+          digest=sha256:$(sha256sum index.json | cut -d' ' -f1)
+          echo "$image@$digest" | tee verified-image.txt
+          for arch in amd64 arm64; do
+            docker pull --platform linux/$arch "$image@$digest"
+            docker image inspect --platform linux/$arch "$image@$digest" > inspected.json
+            python3 - "$arch" <<'PY'
+          import json,os,sys
+          row=json.load(open('inspected.json'))[0]
+          assert row['Architecture']==sys.argv[1], row
+          assert row['Config']['Labels']['org.opencontainers.image.revision']==os.environ['SOURCE_SHA']
+          PY
+            docker image rm "$image@$digest"
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reader-anonymous-pull
+          path: |
+            verified-image.txt
+            index.json

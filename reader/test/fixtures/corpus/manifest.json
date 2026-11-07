@@ -1,0 +1,98 @@
+[
+  {
+    "id": "github-pr",
+    "url": "https://github.com/humanitylabs-org/wizard-ux/pull/1023",
+    "capturedAt": "2026-11-06T06:25:38.340674+00:00",
+    "status": 200,
+    "finalURL": "https://github.com/humanitylabs-org/wizard-ux/pull/1023",
+    "file": "github-pr.html",
+    "sha256": "0179cba6d08eb421fb7308463027f88e9ff1e41f6016551e0bfd4668e927a32f",
+    "bytes": 383974
+  },
+  {
+    "id": "github-issue",
+    "url": "https://github.com/react/react/issues/38119",
+    "capturedAt": "2026-11-06T06:25:38.348627+00:00",
+    "status": 200,
+    "finalURL": "https://github.com/react/react/issues/38119",
+    "file": "github-issue.html",
+    "sha256": "957e1280ef3d5fb05013103b8378305440fc5da1430ec037d81dcccf40299a4c",
+    "bytes": 218459
+  },
+  {
+    "id": "github-readme",
+    "url": "https://github.com/kepano/defuddle",
+    "capturedAt": "2026-11-06T06:25:38.349730+00:00",
+    "status": 200,
+    "finalURL": "https://github.com/kepano/defuddle",
+    "file": "github-readme.html",
+    "sha256": "cad2b96d27c6fd74eedf32eeaab5935b76d9383cbff3f5da8cb48de2f7869940",
+    "bytes": 384629
+  },
+  {
+    "id": "rao",
+    "url": "https://contraptions.venkateshrao.com/p/experiments-with-monstrousness",
+    "capturedAt": "2026-11-06T06:25:38.350392+00:00",
+    "status": 200,
+    "finalURL": "https://contraptions.venkateshrao.com/p/experiments-with-monstrousness",
+    "file": "rao.html",
+    "sha256": "fbff1ef3a228316c483e3336a951efed6380fa5882c491020de9393604ec01dd",
+    "bytes": 207047
+  },
+  {
+    "id": "wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Reading",
+    "capturedAt": "2026-11-06T06:25:38.350955+00:00",
+    "status": 200,
+    "finalURL": "https://en.wikipedia.org/wiki/Reading",
+    "file": "wikipedia.html",
+    "sha256": "9374ec62005d9d516884b2d9f31936b6f52bcfdd9b175b15422516c05fd7ccdd",
+    "bytes": 633361
+  },
+  {
+    "id": "reddit",
+    "url": "https://www.reddit.com/r/programming/comments/1j1u2vn/",
+    "capturedAt": "2026-11-06T06:25:38.422028+00:00",
+    "blocked": "HTTP Error 403: Blocked"
+  },
+  {
+    "id": "x",
+    "url": "https://x.com/jack/status/20",
+    "capturedAt": "2026-11-06T06:25:38.449643+00:00",
+    "status": 200,
+    "finalURL": "https://x.com/jack/status/20",
+    "file": "x.html",
+    "sha256": "c4ce995eafaf1dade4cd9850b19933a6a0d80c6dd5c351dc4171a6779e5cad81",
+    "bytes": 125347
+  },
+  {
+    "id": "hackernews",
+    "url": "https://news.ycombinator.com/item?id=8863",
+    "capturedAt": "2026-11-06T06:25:38.519073+00:00",
+    "status": 200,
+    "finalURL": "https://news.ycombinator.com/item?id=8863",
+    "file": "hackernews.html",
+    "sha256": "7821359b52e8adefd335e9d6f7133061ede5631219e79dde7874257ccc51b47d",
+    "bytes": 100444
+  },
+  {
+    "id": "news",
+    "url": "https://www.nasa.gov/missions/artemis/nasa-shares-plans-to-accelerate-artemis-return-to-moon/",
+    "capturedAt": "2026-11-06T06:25:38.925093+00:00",
+    "status": 200,
+    "finalURL": "https://www.nasa.gov/missions/artemis/nasa-shares-plans-to-accelerate-artemis-return-to-moon/",
+    "file": "news.html",
+    "sha256": "4a1113d66f5330e6ce268780914651e97673b489ef5c76388baf7849f6cf5b43",
+    "bytes": 310188
+  },
+  {
+    "id": "docs",
+    "url": "https://react.dev/learn",
+    "capturedAt": "2026-11-06T06:25:38.980190+00:00",
+    "status": 200,
+    "finalURL": "https://react.dev/learn",
+    "file": "docs.html",
+    "sha256": "01da2250bace5547b048d3e04013794006c418d320059fb3de8665723d2d48e2",
+    "bytes": 265160
+  }
+]

@@ -1,3 +1,24 @@
+def _reading_list(method="GET", data=None):
+    host = os.environ.get("READER_HOST", "browser-reader")
+    port = int(os.environ.get("READER_PORT", "8080"))
+    body = None if data is None else json.dumps(data).encode()
+    request = urllib.request.Request("http://%s:%d/api/list" % (host, port), data=body,
+                                     method=method, headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(request, timeout=60) as response:
+        return json.load(response)
+
+
+@tool("reading_list_add", "Save a public article to the owner's Reading list. Fetches fresh safe Reader metadata, deduplicates the canonical address and stores no article body or cookies.",
+      {"url": {"type": "string"}}, ["url"])
+def reading_list_add(url):
+    return _reading_list("POST", {"url": url})
+
+
+@tool("reading_list_list", "List the owner's saved article metadata, newest first, including read status. Does not fetch article bodies.")
+def reading_list_list():
+    return _reading_list()
+
+
 PAGE_TEXT_MAX = 100000
 
 

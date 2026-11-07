@@ -1,0 +1,154 @@
+[
+  {
+    "id": "github-pr",
+    "before": {
+      "words": 108,
+      "headings": 1,
+      "lists": 1,
+      "code": 0,
+      "tables": 1
+    },
+    "after": {
+      "words": 339,
+      "headings": 4,
+      "lists": 2,
+      "code": 0,
+      "tables": 0
+    },
+    "author": "defleur-agents",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "github-issue",
+    "before": {
+      "words": 255,
+      "headings": 3,
+      "lists": 1,
+      "code": 1,
+      "tables": 0
+    },
+    "after": {
+      "words": 255,
+      "headings": 3,
+      "lists": 1,
+      "code": 1,
+      "tables": 0
+    },
+    "author": "TIMMLOPK",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "github-readme",
+    "before": {
+      "words": 1638,
+      "headings": 24,
+      "lists": 6,
+      "code": 18,
+      "tables": 5
+    },
+    "after": {
+      "words": 1638,
+      "headings": 24,
+      "lists": 6,
+      "code": 18,
+      "tables": 5
+    },
+    "author": "(not supplied by source)",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "rao",
+    "before": {
+      "words": 2803,
+      "headings": 0,
+      "lists": 0,
+      "code": 0,
+      "tables": 0
+    },
+    "after": {
+      "words": 2804,
+      "headings": 0,
+      "lists": 0,
+      "code": 0,
+      "tables": 0
+    },
+    "author": "Venkatesh Rao",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "wikipedia",
+    "before": {
+      "words": 5890,
+      "headings": 0,
+      "lists": 9,
+      "code": 0,
+      "tables": 0
+    },
+    "after": {
+      "words": 4765,
+      "headings": 11,
+      "lists": 3,
+      "code": 0,
+      "tables": 0
+    },
+    "author": "Wikipedia",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "hackernews",
+    "before": {
+      "words": 4095,
+      "headings": 0,
+      "lists": 0,
+      "code": 0,
+      "tables": 51
+    },
+    "after": {
+      "words": 4557,
+      "headings": 1,
+      "lists": 0,
+      "code": 0,
+      "tables": 0
+    },
+    "author": "dhouston",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "news",
+    "before": {
+      "words": 745,
+      "headings": 0,
+      "lists": 0,
+      "code": 0,
+      "tables": 0
+    },
+    "after": {
+      "words": 788,
+      "headings": 1,
+      "lists": 0,
+      "code": 0,
+      "tables": 0
+    },
+    "author": "Lee Mohon",
+    "extractor": "defuddle"
+  },
+  {
+    "id": "docs",
+    "before": {
+      "words": 1797,
+      "headings": 12,
+      "lists": 1,
+      "code": 24,
+      "tables": 0
+    },
+    "after": {
+      "words": 1916,
+      "headings": 12,
+      "lists": 1,
+      "code": 24,
+      "tables": 0
+    },
+    "author": "(not supplied by source)",
+    "extractor": "defuddle"
+  }
+]

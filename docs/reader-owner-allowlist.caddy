@@ -1,0 +1,7 @@
+# Import inside the installation's EXISTING owner-authenticated /browser/ route,
+# after owner verification and before strip_prefix/reverse_proxy. This app never
+# owns/replaces gateway authentication. No general write or MCP/CDP proxy.
+@browserReaderPrivate expression `!path('/browser/', '/browser/reader', '/browser/index.html', '/browser/app.js', '/browser/styles.css', '/browser/wizard-ui.css', '/browser/wizard-tokens.css', '/browser/boot.js', '/browser/health', '/browser/api/reader', '/browser/api/image', '/browser/api/list') && !path_regexp('^/browser/api/list/[a-f0-9-]{36}$')`
+respond @browserReaderPrivate "Box-only API" 403
+@browserReaderUnsafe expression `!(method('GET', 'HEAD') && !path_regexp('^/browser/api/list/[a-f0-9-]{36}$')) && !(method('POST') && path('/browser/api/list')) && !(method('PATCH', 'DELETE') && path_regexp('^/browser/api/list/[a-f0-9-]{36}$'))`
+respond @browserReaderUnsafe "Method not allowed" 405

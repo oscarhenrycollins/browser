@@ -10,6 +10,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generated MCP front is up to date
         run: python3 mcp/inline.py --check
+      - name: Exact Reader image is immutable and multiarchitecture
+        run: python3 tests/check_reader_image.py
       - name: Publish (the index re-reads this repo and runs the wizard.md check)
         run: |
           curl -sS --fail-with-body -X POST https://apps.aiwizards.com/v1/publish \
